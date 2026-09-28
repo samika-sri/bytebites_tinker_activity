@@ -1,0 +1,41 @@
+classDiagram
+    class Customer {
+        -str name
+        -list~Order~ purchase_history
+        +get_name() str
+        +add_order(order: Order) None
+        +get_purchase_history() list~Order~
+        +is_returning_customer() bool
+    }
+
+    class Item {
+        -str name
+        -float price
+        -str category
+        -float popularity_rating
+        +get_name() str
+        +get_price() float
+        +get_category() str
+        +get_popularity_rating() float
+    }
+
+    class Menu {
+        -list~Item~ items
+        +add_item(item: Item) None
+        +remove_item(item: Item) None
+        +get_items() list~Item~
+        +filter_by_category(category: str) list~Item~
+    }
+
+    class Order {
+        -Customer customer
+        -list~Item~ items
+        +add_item(item: Item) None
+        +remove_item(item: Item) None
+        +get_items() list~Item~
+        +calculate_total() float
+    }
+
+    Menu "1" o-- "0..*" Item : lists
+    Order "1" *-- "1..*" Item : contains
+    Customer "1" <--> "0..*" Order : purchase_history
